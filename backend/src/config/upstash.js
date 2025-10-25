@@ -1,4 +1,6 @@
-// config/upstash.js
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
@@ -7,10 +9,9 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-// Allow 5 requests per 10 seconds per IP
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(5, "10 s"),
+  limiter: Ratelimit.slidingWindow(50, "20 s"),
 });
 
 export default ratelimit;
